@@ -18,7 +18,7 @@
             <label for="nama_penyewa">Nama Penyewa:</label>
             <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>
 @endsection
