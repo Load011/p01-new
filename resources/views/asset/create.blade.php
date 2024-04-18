@@ -8,6 +8,7 @@
         <div class="form-group">
             <label for="host_id">Nama Penyewa:</label>
             <select class="form-control" id="host_id" name="host_id">
+                <option value="">No Host</option>
                 @foreach ($hosts as $host)
                     <option value="{{ $host->id }}">{{ $host->nama_penyewa }}</option>
                 @endforeach
@@ -20,23 +21,23 @@
         
         <div class="form-group">
             <label for="wilayah">Wilayah:</label>
-            <input type="text" class="form-control" id="wilayah" name="wilayah">
+            <input type="text" class="form-control" id="wilayah" name="wilayah" value="{{ old('wilayah')}}">
         </div>
         <div class="form-group">
             <label for="nama_aset">Nama Aset:</label>
-            <input type="text" class="form-control" id="nama_aset" name="nama_aset">
+            <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ old('nama_aset')}}">
         </div>
         <div class="form-group">
             <label for="jenis_aset">Jenis Aset:</label>
-            <input type="text" class="form-control" id="jenis_aset" name="jenis_aset">
+            <input type="text" class="form-control" id="jenis_aset" name="jenis_aset" value="{{ old('jenis_aset')}}">
         </div>
         <div class="form-group">
             <label for="kode_aset">Kode Aset:</label>
-            <input type="text" class="form-control" id="kode_aset" name="kode_aset">
+            <input type="text" class="form-control" id="kode_aset" name="kode_aset" value="{{ old('kode_aset')}}">
         </div>
         <div class="form-group">
             <label for="alamat">Alamat:</label>
-            <input type="text" class="form-control" id="alamat" name="alamat">
+            <input type="text" class="form-control" id="alamat" name="alamat" value="{{ old('alamat')}}">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

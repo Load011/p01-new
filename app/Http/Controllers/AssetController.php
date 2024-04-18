@@ -23,7 +23,7 @@ class AssetController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'host_id' => 'required',
+            'host_id' => '',
             'wilayah' => 'required',
             'nama_aset' => 'required',
             'jenis_aset' => 'required',
@@ -47,7 +47,7 @@ class AssetController extends Controller
     public function update(Request $request, Asset $asset)
     {
         $validatedData = $request->validate([
-            'host_id' => 'required',
+            'host_id' => '',
             'wilayah' => 'required',
             'nama_aset' => 'required',
             'jenis_aset' => 'required',

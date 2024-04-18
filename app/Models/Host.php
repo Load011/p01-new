@@ -14,8 +14,18 @@ class Host extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id_transaksi',
-        'nama_penyewa'
+        'nama_penyewa',
+        'no_ktp',
+        'no_tlp',
+        'tgl_awal',
+        'tgl_akhir',
+        'upah_jasa',
+        'harga_sewa',
+        'bank_pembayaran',
+        'jumlah_pembayaran',
+        'saldo_piutang',
+        'status_pengontrak',
+        'status_aktif',
     ];
 
     public function rekapAsets()

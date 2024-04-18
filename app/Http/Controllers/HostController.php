@@ -24,6 +24,18 @@ class HostController extends Controller
     {
         $validatedData = $request->validate([
             'nama_penyewa' => 'required',
+            'no_ktp' => 'required',
+            'no_tlp' => 'required',
+            'tgl_awal' => 'required',
+            'tgl_akhir' => 'required',
+            'upah_jasa' => 'required',
+            'harga_sewa' => 'required',
+            'bank_pembayaran' => 'required',
+            'jumlah_pembayaran' => 'required',
+            'saldo_piutang' => 'required',
+            'status_pengontrak' => 'required',
+            'status_aktif' => 'required',
+
         ]);
 
         Host::create($validatedData);
@@ -41,6 +53,17 @@ class HostController extends Controller
     {
         $validatedData = $request->validate([
             'nama_penyewa' => 'required',
+            'no_ktp' => 'required',
+            'no_tlp' => 'required',
+            'tgl_awal' => 'required',
+            'tgl_akhir' => 'required',
+            'upah_jasa' => 'required',
+            'harga_sewa' => 'required',
+            'bank_pembayaran' => 'required',
+            'jumlah_pembayaran' => 'required',
+            'saldo_piutang' => 'required',
+            'status_pengontrak' => 'required',
+            'status_aktif' => 'required',
         ]);
 
         $host->update($validatedData);
