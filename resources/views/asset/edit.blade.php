@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
+<div class="container">
     <h1>Edit Asset</h1>
     <form action="{{ route('asset.update', $asset->id) }}" method="POST">
         @csrf
@@ -41,6 +41,8 @@
             <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $asset->alamat }}" required>
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='{{ route('asset.index') }}'">Batal</button>
+
     </form>
 </div>
 @endsection

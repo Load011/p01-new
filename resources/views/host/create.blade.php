@@ -72,8 +72,10 @@
                 <option value="1" {{ old('status_aktif') == '1' ? 'selected' : '' }}>Aktif</option>
             </select>
         </div>
-
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='{{ route('host.index') }}'">Batal</button>
+        </div>
     </form>
 </div>
 @endsection
