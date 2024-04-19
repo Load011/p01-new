@@ -40,7 +40,7 @@
                     <td>{{ $host->harga_sewa }}</td>
                     <td>{{ $host->bank_pembayaran }}</td>
                     <td>{{ $host->jumlah_pembayaran }}</td>
-                    <td>{{ $host->status_saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
+                    <td>{{ $host->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
                     <td>{{ $host->status_pengontrak == 0 ? 'Perorangan' : 'Complimet' }}</td>
                     <td>{{ $host->status_aktif == 0 ? 'Tidak Aktif' : 'Aktif' }}</td>
     
