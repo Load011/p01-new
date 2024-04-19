@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Host;
 use App\Models\Asset;
+use App\Models\AssetOwnershipHistory;
 use Illuminate\Http\Request;
 
 class HostController extends Controller
@@ -67,6 +68,17 @@ class HostController extends Controller
         ]);
 
         $host->update($validatedData);
+
+        if ($request->has('asset_id')) {
+            $assetId = $request->input('asset_id');
+            $asset = Asset::with('previousOwners')->find($assetId);
+            if ($asset) {
+                AssetOwnershipHistory::create([
+                    'asset_id' => $assetId,
+                    'previous_owner_id' => $host->id,
+                ]);
+            }
+        }
 
         return redirect()->route('host.index')
                          ->with('success', 'Host updated successfully');

@@ -28,4 +28,16 @@ class Asset extends Model
     public function tuanRumah(){
         return $this->belongsTo(Host::class, 'host_id');
     }
+
+    public function previousOwners()
+    {
+        return $this->hasManyThrough(
+            Host::class,
+            AssetOwnershipHistory::class,
+            'asset_id',
+            'id',
+            'id',
+            'previous_owner_id'
+        )->orderBy('ownership_changed_at', 'desc'); 
+    }
 }

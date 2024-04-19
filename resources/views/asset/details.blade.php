@@ -40,35 +40,35 @@
                                     @if ($asset->tuanRumah)
                                         {{ $asset->tuanRumah->nama_penyewa }}
                                     @else
-                                        N/A
+                                        -
                                     @endif
                                 </td>
                                 <td>
                                     @if ($asset->tuanRumah)
                                         {{ $asset->tuanRumah->no_ktp }}
                                     @else
-                                        N/A
+                                        -
                                     @endif
                                 </td>
                                 <td>
                                     @if ($asset->tuanRumah)
                                         {{ $asset->tuanRumah->no_tlp }}
                                     @else
-                                        N/A
+                                        -
                                     @endif
                                 </td>
                                 <td>
                                     @if ($asset->tuanRumah)
                                         {{ $asset->tuanRumah->tgl_awal }}
                                     @else
-                                        N/A
+                                        -
                                     @endif
                                 </td>
                                 <td>
                                     @if ($asset->tuanRumah)
                                         {{ $asset->tuanRumah->tgl_akhir }}
                                     @else
-                                        N/A
+                                        -
                                     @endif
                                 </td>
                                 <td>{{ $asset->wilayah }}</td>
@@ -84,6 +84,29 @@
                                     @endif
                                 </td>
                             </tr>
+                            @if ($asset->previousOwners->count())
+                            <tr>
+                                <td colspan="12"><strong>Penyewa Sebelumnya</strong></td>
+                            </tr>
+                            @foreach ($asset->previousOwners as $previousOwner)
+                            <tr>
+                                <td>{{ $previousOwner->id }}</td>
+                                <td>{{ $previousOwner->nama_penyewa }}</td>
+                                <td>{{ $previousOwner->no_ktp }}</td>
+                                <td>{{ $previousOwner->no_tlp }}</td>
+                                <td>{{ $previousOwner->tgl_awal }}</td>
+                                <td>{{ $previousOwner->tgl_akhir }}</td>
+                                <td>{{ $asset->wilayah }}</td>
+                                <td>{{ $asset->nama_aset }}</td>
+                                <td>{{ $asset->jenis_aset }}</td>
+                                <td>{{ $asset->kode_aset }}</td>
+                                <td>{{ $asset->alamat }}</td>
+                                <td>{{ $previousOwner->upah_jasa + $previousOwner->harga_sewa }}</td>
+                              </tr>
+                              
+                            @endforeach
+                            @endif
+
                         </tbody>
                     </table>
                     <a href="{{ route('dashboard') }}" class="btn btn-primary">Back</a>
@@ -99,4 +122,3 @@
 </section>
 
 @endsection
-

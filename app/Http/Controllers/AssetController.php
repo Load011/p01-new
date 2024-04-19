@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Host;
+use App\Models\AssetOwnershipHistory;
 use Illuminate\Http\Request;
 
 class AssetController extends Controller
@@ -58,6 +59,12 @@ class AssetController extends Controller
 
         $asset->update($validatedData);
 
+        AssetOwnershipHistory::create([
+            'asset_id' => $asset->id,
+            'previous_owner_id' => $asset->host_id,
+            'ownership_changed_at' => now(),
+        ]);
+
         return redirect()->route('asset.index')
                          ->with('success', 'Asset updated successfully');
     }
@@ -71,7 +78,7 @@ class AssetController extends Controller
     }
     public function details(Asset $asset)
     {
-        return view('asset.details', ['asset' => $asset]);
+        // $asset = Asset::with('previousOwners.asset')->find($asset->id);
+        return view('asset.details', compact('asset'));
     }
-
 }
