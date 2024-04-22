@@ -21,6 +21,8 @@ class Asset extends Model
         'nama_aset',
         'jenis_aset',
         'kode_aset',
+        'deskripsi_aset',
+        'foto_aset',
         'alamat',
 
     ] ;

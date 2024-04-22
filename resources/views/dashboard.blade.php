@@ -17,6 +17,26 @@
                   </li>
               </ol>
           </div>
+          
+          <div class="col-lg-4">
+            <div class="card bg-success">
+              <div class="card-body d-flex flex-column justify-content-center align-items-center text-white">  
+                <i class="fas fa-house-user fa-2x mb-2"></i>
+                <h5 class="card-title mb-0">Aset dengan Penyewa</h5>
+                <h1 class="count h1">{{ $assetsWithHost }}</h1>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-4">
+            <div class="card bg-warning">
+              <div class="card-body d-flex flex-column justify-content-center align-items-center text-white">  
+                <i class="fas fa-home fa-2x mb-2"></i>
+                <h5 class="card-title mb-0">Aset tanpa Penyewa</h5>
+                <h1 class="count h1">{{ $assetsWithoutHost }}</h1>
+              </div>
+            </div>
+          </div>
       </div>
   </div>
 </div>

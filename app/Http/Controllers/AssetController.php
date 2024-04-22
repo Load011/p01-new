@@ -31,7 +31,16 @@ class AssetController extends Controller
             'kode_aset' => 'required',
             'alamat' => 'required',
             'id_transaksi' => 'exists:tuan_rumah,id',
+            'deskripsi_aset' => 'nullable|string',
+            'foto_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        if ($request->hasFile('foto_aset')) {
+            $file = $request->file('foto_aset');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = 'foto_aset/' . $fileName;
+            $file->move(public_path('foto_aset'), $fileName);
+            $validatedData['foto_aset'] = $filePath;
+        }
 
         Asset::create($validatedData);
 
@@ -55,16 +64,31 @@ class AssetController extends Controller
             'kode_aset' => 'required',
             'alamat' => 'required',
             'id_transaksi' => 'exists:tuan_rumah,id',
+            'deskripsi_aset' => 'nullable|string',
+            'foto_aset' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+
         ]);
+        
+        if ($asset->host_id !== null) {
+            AssetOwnershipHistory::create([
+                'asset_id' => $asset->id,
+                'previous_owner_id' => $asset->host_id,
+                'ownership_changed_at' => now(),
+            ]);
+        }
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = 'foto_aset/' . $fileName;
+            $file->move(public_path('foto_aset'), $fileName);
+            // ddd($file);
+
+            $validatedData['foto_aset'] = $filePath;
+        }
 
         $asset->update($validatedData);
-
-        AssetOwnershipHistory::create([
-            'asset_id' => $asset->id,
-            'previous_owner_id' => $asset->host_id,
-            'ownership_changed_at' => now(),
-        ]);
-
+        
         return redirect()->route('asset.index')
                          ->with('success', 'Asset updated successfully');
     }
@@ -78,7 +102,16 @@ class AssetController extends Controller
     }
     public function details(Asset $asset)
     {
-        // $asset = Asset::with('previousOwners.asset')->find($asset->id);
         return view('asset.details', compact('asset'));
     }
-}
+
+    public function detailed(Asset $asset){
+        $host = Host::all();
+        return view('asset.detailed', compact('asset', 'host'));
+    }
+
+    public function edited(Asset $asset)
+    {
+        $hosts = Host::all();
+        return view('asset.edited', compact('asset', 'hosts'));
+    }}

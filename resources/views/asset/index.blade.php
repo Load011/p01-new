@@ -36,7 +36,7 @@
                 <td>{{ $asset->kode_aset }}</td>
                 <td>{{ $asset->alamat }}</td>
                 <td>
-                    <a href="{{ route('asset.edit', $asset->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{{ route('asset.edited', $asset->id) }}" class="btn btn-secondary btn-sm">Edit</a>
                     <form action="{{ route('asset.destroy', $asset->id) }}" method="POST" style="display: inline-block;">
                         @csrf
                         @method('DELETE')

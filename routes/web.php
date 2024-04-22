@@ -26,3 +26,4 @@ Route::get('/assets/{asset}/edit', [AssetController::class, 'edit'])->name('asse
 Route::put('/assets/{asset}', [AssetController::class, 'update'])->name('asset.update');
 Route::delete('/assets/{asset}', [AssetController::class, 'destroy'])->name('asset.destroy');
 Route::get('/assets/{asset}', [AssetController::class, 'details'])->name('asset.details');
+Route::get('/assets/{asset}/edited', [AssetController::class, 'edited'])->name('asset.edited');

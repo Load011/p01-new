@@ -15,10 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('host_id');
             $table->string('wilayah');
+            $table->text('deskripsi_aset')->nullable();
             $table->string('nama_aset');
             $table->string('jenis_aset');
             $table->string('kode_aset');
+            $table->binar('foto_aset')->nullable();
             $table->string('alamat');
+            $table->decimal('pengeluaran',10,0)->nullable();
             $table->unsignedBigInteger('id_transaksi')->nullable();
             $table->timestamps();
         });

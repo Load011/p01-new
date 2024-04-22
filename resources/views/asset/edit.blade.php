@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Edit Asset</h1>
-    <form action="{{ route('asset.update', $asset->id) }}" method="POST">
+    <form action="{{ route('asset.update', $asset->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -25,6 +25,18 @@
             <label for="nama_aset">Nama Aset:</label>
             <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ $asset->nama_aset }}" required>
         </div>
+        
+        @if($asset->foto_aset)
+        <div class="form-group">
+            <label>Foto Saat Ini:</label> <br>
+            <img src="{{ asset($asset->foto_aset) }}" alt="Current Photo" class="img-fluid">
+        </div>
+        @endif
+
+        <div class="form-group">
+            <label for="photo">Ubah Foto?</label>
+            <input type="file" class="form-control-file" id="photo" name="photo" value="{{ $asset->foto_aset}}">
+        </div>
 
         <div class="form-group">
             <label for="jenis_aset">Jenis Aset:</label>
@@ -37,11 +49,16 @@
         </div>
 
         <div class="form-group">
+            <label for="deskripsi_aset"> Deskripsi Aset</label>
+            <input type="text" class="form-control" id="deskripsi_aset" name="deskripsi_aset" value="{{ $asset->deskripsi_aset}}">
+        </div>
+
+        <div class="form-group">
             <label for="alamat">Alamat:</label>
             <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $asset->alamat }}" required>
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
-        <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='{{ route('asset.index') }}'">Batal</button>
+        <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='{{ route('asset.edited', $asset->id) }}'">Batal</button>
 
     </form>
 </div>

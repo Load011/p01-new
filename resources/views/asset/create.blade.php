@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-5">
     <h1>Tambah Asset</h1>
-    <form action="{{ route('asset.store') }}" method="POST">
+    <form action="{{ route('asset.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="host_id">Nama Penyewa:</label>
@@ -26,6 +26,10 @@
         <div class="form-group">
             <label for="nama_aset">Nama Aset:</label>
             <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ old('nama_aset')}}">
+        </div>
+        <div class="form-label">
+            <label for="foto_aset" >Foto Aset:</label>
+            <input class="form-control" type="file" id="foto_aset" name="foto_aset">
         </div>
         <div class="form-group">
             <label for="jenis_aset">Jenis Aset:</label>
