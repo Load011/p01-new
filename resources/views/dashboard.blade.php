@@ -32,18 +32,7 @@
       </div>
   </div>
 </div>
-<div class="chart">
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-body">
-          <canvas id="assetChart">
-            <h1>Chart disini</h1>
-          </canvas>
-        </div>
-      </div>
-    </div>
-</div>
+
 <section class="content">
   <div class="container-fluid">
     <div class="row">      
@@ -88,11 +77,6 @@
 </section>
 
 @endsection
-
-{{-- @push('scripts')
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.6/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.6/js/jquery.dataTables.js"></script>
-@endpush --}}
 <style>
   .scrollable-box {
     overflow-y: auto;
@@ -111,49 +95,6 @@
     z-index: 1;
   }
 </style>
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Parse data from PHP into JavaScript variables
-    var namaAsetData = {!! $chartData['namaAset'] !!};
-    var upahSewaData = {!! $chartData['upahSewa'] !!};
-    var pengeluaranData = {!! $chartData['pengeluaran'] !!};
-
-    // Get the canvas element
-    var ctx = document.getElementById('assetChart').getContext('2d');
-
-    // Create the chart
-    var assetChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: namaAsetData, // Use nama_aset as labels
-        datasets: [{
-          label: 'Upah Sewa',
-          data: upahSewaData,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }, {
-          label: 'Pengeluaran',
-          data: pengeluaranData,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  });
-</script>
-@endpush
 
 
 
