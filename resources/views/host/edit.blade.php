@@ -64,8 +64,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
-        <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='{{ route('host.index') }}'">Batal</button>
-
+        <button type="button" class="btn btn-secondary ml-2" onclick="window.history.back()">Batal</button>
     </form>
 </div>
 

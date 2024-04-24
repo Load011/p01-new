@@ -42,7 +42,11 @@ class AssetController extends Controller
             $validatedData['foto_aset'] = $filePath;
         }
 
-        Asset::create($validatedData);
+        $asset = Asset::create($validatedData);
+
+        if ($request->has('host_id')) {
+            $asset->update(['host_id' => $request->input('host_id')]);
+        }
 
         return redirect()->route('asset.index')
                          ->with('success', 'Asset created successfully.');
@@ -88,7 +92,6 @@ class AssetController extends Controller
         }
 
         $asset->update($validatedData);
-        
         return redirect()->route('asset.index')
                          ->with('success', 'Asset updated successfully');
     }
@@ -103,11 +106,6 @@ class AssetController extends Controller
     public function details(Asset $asset)
     {
         return view('asset.details', compact('asset'));
-    }
-
-    public function detailed(Asset $asset){
-        $host = Host::all();
-        return view('asset.detailed', compact('asset', 'host'));
     }
 
     public function edited(Asset $asset)
