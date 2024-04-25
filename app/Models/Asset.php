@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Host;
+use App\Models\AssetPhoto;
 
 class Asset extends Model
 {
@@ -22,7 +23,6 @@ class Asset extends Model
         'jenis_aset',
         'kode_aset',
         'deskripsi_aset',
-        'foto_aset',
         'pengeluaran',
         'alamat',
 

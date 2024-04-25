@@ -38,8 +38,13 @@ class HostController extends Controller
             'status_aktif' => 'required',
 
         ]);
+        $host = Host::create($validatedData);
 
-        Host::create($validatedData);
+        if ($request->has('asset_id')) {
+            $asset = Asset::findOrFail($request->input('asset_id'));
+            $asset->host_id = $host->id;
+            $asset->save();
+        }
 
         return redirect()->route('host.index')
                          ->with('success', 'Host created successfully.');

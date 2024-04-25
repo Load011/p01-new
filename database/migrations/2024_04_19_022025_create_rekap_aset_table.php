@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_aset');
             $table->string('jenis_aset');
             $table->string('kode_aset');
-            $table->binar('foto_aset')->nullable();
+            $table->binary('foto_aset')->nullable();
             $table->string('alamat');
             $table->decimal('pengeluaran',10,0)->nullable();
             $table->unsignedBigInteger('id_transaksi')->nullable();

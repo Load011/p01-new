@@ -19,13 +19,13 @@
                     <div class="card-body">
                         <div class="row">
                             <!-- Asset Photo -->
-                            <div class="col-md-3">
+                            <div class="col-md-4 border">
                                 <div class="asset-photo-box" style="width: 100%; height: auto;">
                                     <img src="{{ asset($asset->foto_aset) }}" alt="Photo of Asset" style="max-width: 100%; max-height: 100%;">
                                 </div>
                             </div> 
                             <!-- Asset Details -->
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                     <h2>Asset Details</h2>
                                     <a href="{{ route('asset.edit', $asset) }}" class="btn btn-primary">Edit Aset</a>
@@ -46,6 +46,10 @@
                                     <tr>
                                         <th>Wilayah Aset</th>
                                         <td>{{ $asset->wilayah }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pengeluaran Aset</th>
+                                        <td>{{ $asset->pengeluaran}}</td>
                                     </tr>
                                 </table>
                             </div>

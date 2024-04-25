@@ -39,6 +39,10 @@
                 <th>Deskripsi</th>
                 <td>{{ $asset->deskripsi_aset}}</td>
               </tr>
+              <tr>
+                <th>Pengeluaran</th>
+                <td>{{ $asset->pengeluaran}}</td>
+              </tr>
             </table>
           </div>
           <!-- Bagian Penghuni -->

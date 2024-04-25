@@ -6,6 +6,7 @@ use App\Models\Asset;
 use App\Models\Host;
 use App\Models\AssetOwnershipHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AssetController extends Controller
 {
@@ -15,10 +16,11 @@ class AssetController extends Controller
         return view('asset.index', compact('assets'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $hostId = $request->input('hostId');
         $hosts = Host::all();
-        return view('asset.create', compact('hosts'));
+        return view('asset.create', compact('hosts', 'hostId'));
     }
 
     public function store(Request $request)
@@ -32,7 +34,8 @@ class AssetController extends Controller
             'alamat' => 'required',
             'id_transaksi' => 'exists:tuan_rumah,id',
             'deskripsi_aset' => 'nullable|string',
-            'foto_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'foto_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pengeluaran' => 'nullable',
         ]);
         if ($request->hasFile('foto_aset')) {
             $file = $request->file('foto_aset');
@@ -45,8 +48,28 @@ class AssetController extends Controller
         $asset = Asset::create($validatedData);
 
         if ($request->has('host_id')) {
-            $asset->update(['host_id' => $request->input('host_id')]);
-        }
+            $validatedData['host_id'] = $request->input('host_id');
+          } else {
+            // No host selected, create a new one and associate with asset
+            $hostData = $request->only([
+                'nama_penyewa',
+                'no_ktp',
+                'no_tlp',
+                'tgl_awal',
+                'tgl_akhir',
+                'upah_jasa',
+                'harga_sewa',
+                'bank_pembayaran',
+                'jumlah_pembayaran',
+                'saldo_piutang',
+                'status_pengontrak',
+                'status_aktif',
+            ]);
+        
+            $asset = $request->user()->assets()->create($validatedData);
+            dd($hostData);
+            $asset->tuanRumah()->create($hostData);
+          }
 
         return redirect()->route('asset.index')
                          ->with('success', 'Asset created successfully.');
@@ -92,7 +115,7 @@ class AssetController extends Controller
         }
 
         $asset->update($validatedData);
-        return redirect()->route('asset.index')
+        return redirect()->route('asset.edited', $asset->id)
                          ->with('success', 'Asset updated successfully');
     }
 

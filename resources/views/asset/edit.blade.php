@@ -15,6 +15,11 @@
                 @endforeach
             </select>
         </div>
+        
+        <div class="form-group">
+            <label for="nama_aset">Nama Aset:</label>
+            <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ $asset->nama_aset }}" required>
+        </div>
 
         <div class="form-group">
             <label for="wilayah">Wilayah:</label>
@@ -22,14 +27,14 @@
         </div>
 
         <div class="form-group">
-            <label for="nama_aset">Nama Aset:</label>
-            <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ $asset->nama_aset }}" required>
+            <label for="alamat">Alamat:</label>
+            <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $asset->alamat }}" required>
         </div>
         
         @if($asset->foto_aset)
         <div class="form-group">
             <label>Foto Saat Ini:</label> <br>
-            <img src="{{ asset($asset->foto_aset) }}" alt="Current Photo" class="img-fluid">
+            <img src="{{ asset($asset->foto_aset) }}" alt="Current Photo" class="img-fluid" style="max-width: 300px; max-height: 300px;">
         </div>
         @endif
 
@@ -52,10 +57,10 @@
             <label for="deskripsi_aset"> Deskripsi Aset</label>
             <input type="text" class="form-control" id="deskripsi_aset" name="deskripsi_aset" value="{{ $asset->deskripsi_aset}}">
         </div>
-
+        
         <div class="form-group">
-            <label for="alamat">Alamat:</label>
-            <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $asset->alamat }}" required>
+            <label for="pengeluaran">Pengeluaran:</label>
+            <input type="number" class="form-control" id="pengeluaran" name="pengeluaran" value="{{ $asset->pengeluaran }}">
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
         <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='{{ route('asset.edited', $asset->id) }}'">Batal</button>

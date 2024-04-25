@@ -13,14 +13,16 @@ class DashboardController extends Controller
 
         $dataAset = Asset::pluck('nama_aset');
 
-        $assetsWithHost = Asset::whereNotNull('host_id')->count();
-        $assetsWithHostList = Asset::whereNotNull('host_id')->get();
-        $assetsWithoutHost = Asset::whereNull('host_id')->count();
-        $assetsWithoutHostList = Asset::whereNull('host_id')->get();
+        $assetsWithHost = Asset::has('tuanRumah')->count();
+        $assetsWithoutHost = Asset::doesntHave('tuanRumah')->count();
 
-        $hargaSewaWithHost = $assetsWithHostList->pluck('tuanRumah.harga_sewa');
+        $hargaSewaWithHost = $assets->map(function($asset) {
+            return $asset->tuanRumah ? $asset->tuanRumah->harga_sewa : 0;
+        });
 
-        return view("dashboard", compact('assets','assetsWithHost', 'assetsWithHostList', 
-        'assetsWithoutHost', 'assetsWithoutHostList', 'dataAset', 'hargaSewaWithHost'));
+        $pengeluaran = $assets->pluck('pengeluaran')->toArray();
+
+
+        return view("dashboard", compact('assets', 'assetsWithHost', 'assetsWithoutHost', 'dataAset', 'hargaSewaWithHost', 'pengeluaran'));
     }
 }

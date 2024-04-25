@@ -18,18 +18,21 @@
             <label for="host_id">Penyewa:</label>
             <input type="text" class="form-control" id="host_id" name="host_id">
         </div> --}}
-        
+        <div class="form-group">
+            <label for="nama_aset">Nama Aset:</label>
+            <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ old('nama_aset')}}">
+        </div>
+        <div class="form-group">
+            <label for="alamat">Alamat:</label>
+            <input type="text" class="form-control" id="alamat" name="alamat" value="{{ old('alamat')}}">
+        </div>
         <div class="form-group">
             <label for="wilayah">Wilayah:</label>
             <input type="text" class="form-control" id="wilayah" name="wilayah" value="{{ old('wilayah')}}">
         </div>
         <div class="form-group">
-            <label for="nama_aset">Nama Aset:</label>
-            <input type="text" class="form-control" id="nama_aset" name="nama_aset" value="{{ old('nama_aset')}}">
-        </div>
-        <div class="form-label">
-            <label for="foto_aset" >Foto Aset:</label>
-            <input class="form-control" type="file" id="foto_aset" name="foto_aset">
+            <label for="foto_aset">Foto Asset:</label>
+            <input type="file" id="foto_aset" name="foto_aset[]" multiple>
         </div>
         <div class="form-group">
             <label for="jenis_aset">Jenis Aset:</label>
@@ -40,9 +43,10 @@
             <input type="text" class="form-control" id="kode_aset" name="kode_aset" value="{{ old('kode_aset')}}">
         </div>
         <div class="form-group">
-            <label for="alamat">Alamat:</label>
-            <input type="text" class="form-control" id="alamat" name="alamat" value="{{ old('alamat')}}">
+            <label for="pengeluaran">Pengeluaran Aset:</label>
+            <input type="number" class="form-control" id="pengeluaran" name="pengeluaran" value="{{ old('pengeluaran')}}">
         </div>
+        
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="button" class="btn btn-secondary ml-2" onclick="window.location.href='{{ route('asset.index') }}'">Batal</button>
 
