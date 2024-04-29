@@ -31,6 +31,10 @@
             <input type="text" class="form-control" id="wilayah" name="wilayah" value="{{ old('wilayah')}}">
         </div>
         <div class="form-group">
+            <label for="deskripsi_aset">Deskripsi Aset:</label>
+            <input type="text" class="form-control" id="deskripsi_aset" name="deskripsi_aset" value="{{ old('deskripsi_aset')}}">
+        </div>
+        <div class="form-group">
             <label for="photos">Foto Asset (Maksimal 4 foto):</label>
             <input type="file" class="form-control-file" id="photos" name="photos[]" accept="image/*" multiple>
         </div>

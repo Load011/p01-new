@@ -1,35 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="content-header">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-sm-6">
-              <h1 class="text-dark">Dashboard</h1>
-          </div>
-          <div class="col-sm-6">
-          </div>
-          
-          <div class="col-lg-3">
-            <div class="card bg-success">
-              <div class="card-body d-flex flex-column justify-content-center align-items-center text-white">  
-                <i class="fas fa-house-user"></i>
-                <h5 class="card-title">Aset dengan Penyewa</h5>
-                <h1 class="count h1">{{ $assetsWithHost }}</h1>
-              </div>
-            </div>
-          </div>
-          
-          <div class="col-lg-3">
-            <div class="card bg-warning">
-              <div class="card-body d-flex flex-column justify-content-center align-items-center text-white">  
-                <i class="fas fa-home"></i>
-                <h5 class="card-title">Aset tanpa Penyewa</h5>
-                <h1 class="count h1">{{ $assetsWithoutHost }}</h1>
-              </div>
-            </div>
-          </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <h1 class="text-dark">Dashboard</h1>
       </div>
+      <!-- Card -->
+      <!-- Card Hijau -->
+      <div class="col-lg-3">
+        <div class="card bg-success">
+          <div class="card-body d-flex flex-column align-items-center text-white">
+            <i class="fas fa-house-user"></i>
+            <h5 class="card-title">Aset dengan Penyewa</h5>
+            <h1 class="count h1">{{ $assetsWithHost }}</h1>
+          </div>
+        </div>
+      </div>
+      <!-- Card Kuning -->
+      <div class="col-lg-3">
+        <div class="card bg-warning">
+          <div class="card-body d-flex flex-column align-items-center text-white">
+            <i class="fas fa-home"></i>
+            <h5 class="card-title">Aset tanpa Penyewa</h5>
+            <h1 class="count h1">{{ $assetsWithoutHost }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -37,74 +37,76 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
+        <!-- Graph bar -->
         <div class="card">
+          <div class="card-header">
+            <h2 class="float-left">Pendapatan per Asset</h2>
+            <div class="float-right">
+              <button class="btn btn-primary">Detail Pendapatan</button>
+            </div>
+          </div>
           <div class="card-body">
-            <div class="d-flex">
-              <p class="d-flex flex-column">
-                <span>Pendapatan Aset</span>
-              </p>
-            </div>
-            <!-- /.d-flex -->
             <div class="position-relative mb-4 border">
-              <canvas id="sales-chart" height="200"></canvas>
+              <canvas id="sales-chart" height="250"></canvas>
             </div>
-  
             <div class="d-flex flex-row justify-content-end">
               <span class="mr-2">
-                <i class="fas fa-square text-primary"></i> Harga Sewa
+                <i class="fas fa-square text-primary"> Harga Sewa </i>
               </span>
-              <span>
-                <i class="fas fa-square text-gray"></i> Pengeluaran
+              <span class="mr-2">
+                <i class="fas fa-square text-gray"> Pengeluaran Asset </i>
               </span>
             </div>
           </div>
         </div>
-      </div>  
+    </div>
+      <!-- .end Graph -->
+
+      <!-- Asset Details -->
       <div class="col-lg-12">
-          <div class="card">
-            <div class="card-header">
-              <h5>Search Assets</h5>
-              <input type="text" id="searchInput" class="form-control" placeholder="Search...">  
+        <div class="card">
+          <div class="card-header">
+            <h2 class="float-left">Asset Keseluruhan</h2>
+            <div class="float-right">
+                <input type="text" id="searchInput" placeholder="Search for assets...">
             </div>
-              <div class="card-body">
-                  <div class="scrollable-box">
-                      <table class="table">
-                          <thead class="thead-fixed">
-                              <tr>
-                                  <th>Nama Aset</th>
-                                  <th>Jenis Aset</th>
-                                  <th>Alamat</th>
-                                  <th>Details</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach ($assets as $asset)
-                              <tr class="asset-row" data-asset-id="{{ $asset->id }}">
-                                  <td>{{ $asset->nama_aset }}</td>
-                                  <td>{{ $asset->jenis_aset }}</td>
-                                  <td>{{ $asset->alamat }}</td>
-                                  <td>
-                                      <a href="{{ route('asset.details', $asset->id) }}" class="btn btn-primary">Details</a>
-                                  </td>
-                              </tr>
-                              @endforeach
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
           </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="thead-fixed">
+                  <tr>
+                    <th>Nama Aset</th>
+                    <th>Jenis Aset</th>
+                    <th>Alamat</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($assets as $asset)
+                  <tr class="asset-row" data-set-id="{{ $asset->id}}">
+                    <td>{{$asset->nama_aset}}</td>
+                    <td>{{$asset->jenis_aset}}</td>
+                    <td>{{$asset->alamat}}</td>
+                    <td>
+                      <a href="{{ route('asset.details', $asset->id) }}" class="btn btn-primary">Detail</a>
+                    </td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
-          <!-- /.col -->
-      </div>
-      <!-- /.row -->
-  </div>
-  <!-- /.container-fluid -->
 </section>
+
 <script>
-  /* global Chart:false */
-// Chart
-$(function () {
+  //Graph
+
+  $(function () {
   'use strict'
 
   var ticksStyle = {
@@ -114,8 +116,6 @@ $(function () {
 
   var mode = 'index'
   var intersect = true
-  // console.log('Data Aset:', {!! json_encode($dataAset) !!});
-  // console.log('Harga Sewa With Host:', {!! json_encode($hargaSewaWithHost) !!});
   console.log({!! json_encode($pengeluaran) !!})
   var $salesChart = $('#sales-chart')
   var salesChart = new Chart($salesChart, {
@@ -197,30 +197,20 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
 </script>
-@endsection
 
 <style>
-  .content-wrapper {
-  min-height: calc(100vh - 70px);
-}
-
-  .scrollable-box {
+  .table-responsive {
+    max-height: 400px; /* Adjust the maximum height as needed */
     overflow-y: auto;
-    max-height: 300px;
-    border: 1px solid #ddd;
-  }
+}
 .thead-fixed {
     position: sticky;
     top: -10px;
     background-color: #F5F5F5;
-    z-index: 999;
   }
 
-.table tbody {
-    z-index: 1;
-  }
 </style>
 
-
-
+@endsection

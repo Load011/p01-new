@@ -27,7 +27,7 @@ class AssetController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'host_id' => '',
+            'host_id' => 'nullable',
             'wilayah' => 'required',
             'nama_aset' => 'required',
             'jenis_aset' => 'required',
@@ -42,52 +42,19 @@ class AssetController extends Controller
 
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
-                // Get the current timestamp to include in the filename
                 $timestamp = now()->format('YmdHis');
-        
-                // Generate a unique identifier
                 $identifier = uniqid();
-        
-                // Get the original file extension
                 $extension = $photo->getClientOriginalExtension();
-        
-                // Generate the new filename
                 $filename = "{$asset->id}_img_{$timestamp}_{$identifier}.{$extension}";
         
-                // Store the uploaded photo in the storage with the new filename
                 $path = $photo->storeAs('', $filename, 'public');
         
-                // Create a new AssetPhoto model instance
                 $assetPhoto = new AssetPhoto();
                 $assetPhoto->asset_id = $asset->id;
                 $assetPhoto->photo_path = $path;
                 $assetPhoto->save();
             }
         }
-        
-        // if ($request->has('host_id')) {
-        //     $validatedData['host_id'] = $request->input('host_id');
-        //   } else {
-        //     // No host selected, create a new one and associate with asset
-        //     $hostData = $request->only([
-        //         'nama_penyewa',
-        //         'no_ktp',
-        //         'no_tlp',
-        //         'tgl_awal',
-        //         'tgl_akhir',
-        //         'upah_jasa',
-        //         'harga_sewa',
-        //         'bank_pembayaran',
-        //         'jumlah_pembayaran',
-        //         'saldo_piutang',
-        //         'status_pengontrak',
-        //         'status_aktif',
-        //     ]);
-        
-        //     $asset = $request->user()->assets()->create($validatedData);
-        //     dd($hostData);
-        //     $asset->tuanRumah()->create($hostData);
-        //   }
         return redirect()->route('asset.index')
                          ->with('success', 'Asset created successfully.');
     }
