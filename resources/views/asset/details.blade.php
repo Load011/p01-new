@@ -11,42 +11,59 @@
   <div class="container">
     <div class="card">
       <div class="card-body border">
-        <div class="row">
-          <div class="col-md-4 border">
-            <div class="asset-photo-box" style="width: 100%; height: auto;">
-              <img src="{{ asset($asset->foto_aset) }}" alt="Photo of Asset" class="img-fluid">
+        <div class="col-mt-12">
+          <div class="row">
+            <!--- Bagian Foto --->
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <img src="{{ asset('foto_aset/' . $asset->photos->first()->photo_path) }}" alt="Asset Photo" class="img-fluid main-photo" id="mainPhoto">
+                </div>
+              </div>
+              <div class="row thumbnails">
+                @foreach($asset->photos as $key => $photo)
+                  <div class="col-md-3 grid-item">
+                    <img src="{{ asset('foto_aset/' . $photo->photo_path) }}" alt="Asset Photo" class="img-fluid thumbnail" data-key="{{ $key }}" onclick="changeMainPhoto(this)">
+                  </div>
+                @endforeach
+              </div>
+            </div>
+            
+              <div class="col-md-8">
+                <table class="table border">
+                  <!--- Bagian Utama --->
+                  <tr>
+                    <th>Nama Aset</th>
+                    <td>{{ $asset->nama_aset }}</td>
+                  </tr>
+                  <tr>
+                    <th>Alamat</th>
+                    <td>{{ $asset->alamat }}</td>
+                  </tr>
+                  <tr>
+                    <th>Jenis Aset</th>
+                    <td>{{ $asset->jenis_aset }}</td>
+                  </tr>
+                  <tr>
+                    <th>Wilayah Aset</th>
+                    <td>{{ $asset->wilayah }}</td>
+                  </tr>
+                  <tr>
+                    <th>Deskripsi</th>
+                    <td>{{ $asset->deskripsi_aset}}</td>
+                  </tr>
+                  <tr>
+                    <th>Pengeluaran</th>
+                    <td>{{ $asset->pengeluaran}}</td>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="col-md-8">
-            <table class="table border">
-              <tr>
-                <th>Nama Aset</th>
-                <td>{{ $asset->nama_aset }}</td>
-              </tr>
-              <tr>
-                <th>Alamat</th>
-                <td>{{ $asset->alamat }}</td>
-              </tr>
-              <tr>
-                <th>Jenis Aset</th>
-                <td>{{ $asset->jenis_aset }}</td>
-              </tr>
-              <tr>
-                <th>Wilayah Aset</th>
-                <td>{{ $asset->wilayah }}</td>
-              </tr>
-              <tr>
-                <th>Deskripsi</th>
-                <td>{{ $asset->deskripsi_aset}}</td>
-              </tr>
-              <tr>
-                <th>Pengeluaran</th>
-                <td>{{ $asset->pengeluaran}}</td>
-              </tr>
-            </table>
-          </div>
-          <!-- Bagian Penghuni -->
-          <div class="mt-4">
+          
+        <div class="col-mt-12">
+          <!--- Bagian Penghuni Sekarang -->
+          <div class="col-mt-4">
             <h2>Penghuni Saat Ini</h2>
           </div>
           <table class="table border">
@@ -67,7 +84,8 @@
               </tr>
             </tbody>
           </table>
-          
+        </div>
+        <div class="col-mt-12">
           <div class="mt-4">
             @if ($asset->previousOwners->count())
             <h2>Penghuni Aset Sebelumnya</h2>
@@ -106,12 +124,12 @@
             @endif
             @if (!$asset->tuanRumah)
               <div class="mt-4">
-                <a href="{{ route('host.create') }}" class="btn btn-primary">Create Host</a>
+                <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
               </div>
             @endif
             <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">Back</a>
-          </div>
-        </div> <!-- ./row -->
+          </div>        
+        </div>
       </div>
     </div>
   </div> <!-- ./container -->
@@ -132,4 +150,33 @@
     background-color: #F5F5F5;
     z-index: 1;
   }
+
+    #mainPhoto {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+  }
+    .thumbnail {
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+  }
 </style>
+
+<script>
+  function changeMainPhoto(clickedPhoto) {
+    // Get the clicked photo's data-key attribute (index)
+    const selectedIndex = clickedPhoto.dataset.key;
+  
+    // Get references to the main photo and all thumbnails
+    const mainPhoto = document.getElementById('mainPhoto');
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+  
+    // Update the main photo source and remove the "selected" class from all thumbnails
+    mainPhoto.src = clickedPhoto.src;
+    thumbnails.forEach(thumbnail => thumbnail.classList.remove('selected'));
+  
+    // Add the "selected" class to the clicked thumbnail
+    clickedPhoto.classList.add('selected');
+  }
+  </script>

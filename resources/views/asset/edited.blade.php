@@ -17,56 +17,58 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="row">
-                            <!-- Asset Photo -->
-                            <div class="col-md-4 border">
-                                <div class="asset-photo-box" style="width: 100%; height: auto;">
-                                    <img src="{{ asset($asset->foto_aset) }}" alt="Photo of Asset" style="max-width: 100%; max-height: 100%;">
+                        <div class="col-mt-12">
+                            <div class="row">
+                              <!--- Bagian Foto --->
+                              <div class="col-md-4">
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <img src="{{ asset('foto_aset/' . $asset->photos->first()->photo_path) }}" alt="Asset Photo" class="img-fluid main-photo" id="mainPhoto">
+                                  </div>
                                 </div>
-                            </div> 
-                            <!-- Asset Details -->
-                            <div class="col-md-8">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h2>Asset Details</h2>
-                                    <a href="{{ route('asset.edit', $asset) }}" class="btn btn-primary">Edit Aset</a>
+                                <div class="row thumbnails">
+                                  @foreach($asset->photos as $key => $photo)
+                                    <div class="col-md-3 grid-item">
+                                      <img src="{{ asset('foto_aset/' . $photo->photo_path) }}" alt="Asset Photo" class="img-fluid thumbnail" data-key="{{ $key }}" onclick="changeMainPhoto(this)">
+                                    </div>
+                                  @endforeach
                                 </div>
-                                <table class="table">
+                              </div>
+                                <div class="col-md-8">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h2>Asset Details</h2>
+                                        <a href="{{ route('asset.edit', $asset) }}" class="btn btn-primary">Edit Aset</a>
+                                    </div>
+                                  <table class="table border">
+                                    <!--- Bagian Utama --->
                                     <tr>
-                                        <th>Nama Aset</th>
-                                        <td>{{ $asset->nama_aset }}</td>
+                                      <th>Nama Aset</th>
+                                      <td>{{ $asset->nama_aset }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Alamat</th>
-                                        <td>{{ $asset->alamat }}</td>
+                                      <th>Alamat</th>
+                                      <td>{{ $asset->alamat }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Jenis Aset</th>
-                                        <td>{{ $asset->jenis_aset }}</td>
+                                      <th>Jenis Aset</th>
+                                      <td>{{ $asset->jenis_aset }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Wilayah Aset</th>
-                                        <td>{{ $asset->wilayah }}</td>
+                                      <th>Wilayah Aset</th>
+                                      <td>{{ $asset->wilayah }}</td>
                                     </tr>
                                     <tr>
-                                        <th>Pengeluaran Aset</th>
-                                        <td>{{ $asset->pengeluaran}}</td>
+                                      <th>Deskripsi</th>
+                                      <td>{{ $asset->deskripsi_aset}}</td>
                                     </tr>
-                                </table>
+                                    <tr>
+                                      <th>Pengeluaran</th>
+                                      <td>{{ $asset->pengeluaran}}</td>
+                                    </tr>
+                                  </table>
+                                </div>
+                              </div>
                             </div>
-                            {{-- <div class="col-md-3">
-                                <button class="btn btn-secondary mt-2" id="edit-photo-btn">Edit Photo</button>
-                            </div> --}}
-                        </div>
-
-                        <!-- Description -->
-                        <div class="mt-4">
-                            <h2>Deskripsi</h2>
-                            <div class="card">
-                                <div class="card-body">
-                                    {{ $asset->deskripsi_aset }}
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Tenant Details -->
                         <div class="mt-4">
@@ -108,4 +110,21 @@
     function redirectToEditPage(assetId) {
         window.location.href = `/assets/${assetId}/edit`;
     }
+    function changeMainPhoto(clickedPhoto) {
+    // Get the clicked photo's data-key attribute (index)
+    const selectedIndex = clickedPhoto.dataset.key;
+  
+    // Get references to the main photo and all thumbnails
+    const mainPhoto = document.getElementById('mainPhoto');
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+  
+    // Update the main photo source and remove the "selected" class from all thumbnails
+    mainPhoto.src = clickedPhoto.src;
+    thumbnails.forEach(thumbnail => thumbnail.classList.remove('selected'));
+  
+    // Add the "selected" class to the clicked thumbnail
+    clickedPhoto.classList.add('selected');
+  }
 </script>
+
+

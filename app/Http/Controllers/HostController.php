@@ -15,13 +15,12 @@ class HostController extends Controller
         return view('host.index', compact('hosts'));
     }
 
-    public function create()
+    public function create($asset)
     {
-        $assets = Asset::all();
-        return view('host.create', compact('assets'));
+        return view('host.create', compact('asset'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $asset)
     {
         $validatedData = $request->validate([
             'nama_penyewa' => 'required',
@@ -39,14 +38,11 @@ class HostController extends Controller
 
         ]);
         $host = Host::create($validatedData);
+        $assets = Asset::where('id', $asset)->first();
+        $assets->host_id = $host->id;
+        $assets->save();
 
-        if ($request->has('asset_id')) {
-            $asset = Asset::findOrFail($request->input('asset_id'));
-            $asset->host_id = $host->id;
-            $asset->save();
-        }
-
-        return redirect()->route('host.index')
+        return redirect()->route('asset.details', $assets->id)
                          ->with('success', 'Host created successfully.');
     }
 
@@ -85,7 +81,7 @@ class HostController extends Controller
             }
         }
 
-        return redirect()->route('host.index')
+        return redirect()->route('asset.index')
                          ->with('success', 'Host updated successfully');
     }
 

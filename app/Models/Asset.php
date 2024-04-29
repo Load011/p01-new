@@ -31,7 +31,10 @@ class Asset extends Model
     public function tuanRumah(){
         return $this->belongsTo(Host::class, 'host_id');
     }
-
+    public function photos()
+    {
+        return $this->hasMany(AssetPhoto::class, 'asset_id');
+    }
     public function previousOwners()
     {
         return $this->hasManyThrough(

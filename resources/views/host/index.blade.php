@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-body">
             <h1>Para Penyewa</h1>
-                <a href="{{ route('host.create') }}" class="btn btn-success mb-3">Tambah Penyewa</a>
+                {{-- <a href="{{ route('host.create') }}" class="btn btn-success mb-3">Tambah Penyewa</a> --}}
                 @if ($hosts->isEmpty())
                 <div class="alert alert-info">
                     Tidak ada Penyewa

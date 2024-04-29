@@ -31,16 +31,22 @@
             <input type="text" class="form-control" id="alamat" name="alamat" value="{{ $asset->alamat }}" required>
         </div>
         
-        @if($asset->foto_aset)
-        <div class="form-group">
-            <label>Foto Saat Ini:</label> <br>
-            <img src="{{ asset($asset->foto_aset) }}" alt="Current Photo" class="img-fluid" style="max-width: 300px; max-height: 300px;">
-        </div>
+        @if($asset->photos->count() > 0)
+            <div class="form-group">
+                <label>Foto Saat Ini:</label> <br>
+                <div class="row">
+                    @foreach($asset->photos as $photo)
+                        <div class="col-md-2" style="height: auto; overflow: hidden;">
+                            <img src="{{ asset('foto_aset/' . $photo->photo_path) }}" alt="Asset Photo" class="img-fluid" style="height: 100%; width: auto;">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         @endif
 
         <div class="form-group">
-            <label for="photo">Ubah Foto?</label>
-            <input type="file" class="form-control-file" id="photo" name="photo" value="{{ $asset->foto_aset}}">
+            <label for="photos">Ubah Foto?</label>
+            <input type="file" class="form-control-file" id="photos" name="photos[]" multiple>
         </div>
 
         <div class="form-group">

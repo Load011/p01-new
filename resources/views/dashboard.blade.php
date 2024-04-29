@@ -62,6 +62,10 @@
       </div>  
       <div class="col-lg-12">
           <div class="card">
+            <div class="card-header">
+              <h5>Search Assets</h5>
+              <input type="text" id="searchInput" class="form-control" placeholder="Search...">  
+            </div>
               <div class="card-body">
                   <div class="scrollable-box">
                       <table class="table">
@@ -99,7 +103,7 @@
 </section>
 <script>
   /* global Chart:false */
-
+// Chart
 $(function () {
   'use strict'
 
@@ -172,6 +176,27 @@ $(function () {
     }
   })
 })
+
+// Search Input
+document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchText = this.value.toLowerCase();
+            const rows = document.querySelectorAll('.asset-row');
+
+            rows.forEach(row => {
+                const assetName = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                const assetType = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const assetAddress = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                const assetDetails = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+
+                if (assetName.includes(searchText) || assetType.includes(searchText) || assetAddress.includes(searchText) || assetDetails.includes(searchText)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
 </script>
 @endsection
 

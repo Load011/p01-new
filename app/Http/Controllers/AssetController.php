@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use App\Models\Host;
+use App\Models\AssetPhoto;
 use App\Models\AssetOwnershipHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,43 +35,59 @@ class AssetController extends Controller
             'alamat' => 'required',
             'id_transaksi' => 'exists:tuan_rumah,id',
             'deskripsi_aset' => 'nullable|string',
-            'foto_aset' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'pengeluaran' => 'nullable',
         ]);
-        if ($request->hasFile('foto_aset')) {
-            $file = $request->file('foto_aset');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = 'foto_aset/' . $fileName;
-            $file->move(public_path('foto_aset'), $fileName);
-            $validatedData['foto_aset'] = $filePath;
-        }
 
         $asset = Asset::create($validatedData);
 
-        if ($request->has('host_id')) {
-            $validatedData['host_id'] = $request->input('host_id');
-          } else {
-            // No host selected, create a new one and associate with asset
-            $hostData = $request->only([
-                'nama_penyewa',
-                'no_ktp',
-                'no_tlp',
-                'tgl_awal',
-                'tgl_akhir',
-                'upah_jasa',
-                'harga_sewa',
-                'bank_pembayaran',
-                'jumlah_pembayaran',
-                'saldo_piutang',
-                'status_pengontrak',
-                'status_aktif',
-            ]);
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                // Get the current timestamp to include in the filename
+                $timestamp = now()->format('YmdHis');
         
-            $asset = $request->user()->assets()->create($validatedData);
-            dd($hostData);
-            $asset->tuanRumah()->create($hostData);
-          }
-
+                // Generate a unique identifier
+                $identifier = uniqid();
+        
+                // Get the original file extension
+                $extension = $photo->getClientOriginalExtension();
+        
+                // Generate the new filename
+                $filename = "{$asset->id}_img_{$timestamp}_{$identifier}.{$extension}";
+        
+                // Store the uploaded photo in the storage with the new filename
+                $path = $photo->storeAs('', $filename, 'public');
+        
+                // Create a new AssetPhoto model instance
+                $assetPhoto = new AssetPhoto();
+                $assetPhoto->asset_id = $asset->id;
+                $assetPhoto->photo_path = $path;
+                $assetPhoto->save();
+            }
+        }
+        
+        // if ($request->has('host_id')) {
+        //     $validatedData['host_id'] = $request->input('host_id');
+        //   } else {
+        //     // No host selected, create a new one and associate with asset
+        //     $hostData = $request->only([
+        //         'nama_penyewa',
+        //         'no_ktp',
+        //         'no_tlp',
+        //         'tgl_awal',
+        //         'tgl_akhir',
+        //         'upah_jasa',
+        //         'harga_sewa',
+        //         'bank_pembayaran',
+        //         'jumlah_pembayaran',
+        //         'saldo_piutang',
+        //         'status_pengontrak',
+        //         'status_aktif',
+        //     ]);
+        
+        //     $asset = $request->user()->assets()->create($validatedData);
+        //     dd($hostData);
+        //     $asset->tuanRumah()->create($hostData);
+        //   }
         return redirect()->route('asset.index')
                          ->with('success', 'Asset created successfully.');
     }
@@ -92,8 +109,7 @@ class AssetController extends Controller
             'alamat' => 'required',
             'id_transaksi' => 'exists:tuan_rumah,id',
             'deskripsi_aset' => 'nullable|string',
-            'foto_aset' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
-
+            'pengeluaran' => 'nullable',
         ]);
         
         if ($asset->host_id !== null) {
@@ -104,17 +120,19 @@ class AssetController extends Controller
             ]);
         }
 
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = 'foto_aset/' . $fileName;
-            $file->move(public_path('foto_aset'), $fileName);
-            // ddd($file);
-
-            $validatedData['foto_aset'] = $filePath;
-        }
-
         $asset->update($validatedData);
+        if ($request->hasFile('photos')) {
+            $asset->photos()->delete();
+        
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('', 'public');
+                
+                $assetPhoto = new AssetPhoto();
+                $assetPhoto->asset_id = $asset->id;
+                $assetPhoto->photo_path = $path;
+                $assetPhoto->save();
+            }
+        }
         return redirect()->route('asset.edited', $asset->id)
                          ->with('success', 'Asset updated successfully');
     }

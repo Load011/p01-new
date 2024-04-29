@@ -31,8 +31,8 @@
             <input type="text" class="form-control" id="wilayah" name="wilayah" value="{{ old('wilayah')}}">
         </div>
         <div class="form-group">
-            <label for="foto_aset">Foto Asset:</label>
-            <input type="file" id="foto_aset" name="foto_aset[]" multiple>
+            <label for="photos">Foto Asset (Maksimal 4 foto):</label>
+            <input type="file" class="form-control-file" id="photos" name="photos[]" accept="image/*" multiple>
         </div>
         <div class="form-group">
             <label for="jenis_aset">Jenis Aset:</label>

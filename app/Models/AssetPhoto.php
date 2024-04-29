@@ -9,15 +9,17 @@ class AssetPhoto extends Model
 {
     protected $table = "asset_photos";
 
+    public $timestamps = false;
+
     protected $fillable = [
         'asset_id',
         'photo_path',
     ];
 
     public function asset()
-{
-    return $this->belongsTo(Asset::class);
-}
+    {
+        return $this->belongsTo(Asset::class);
+    }
 
     use HasFactory;
 }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-5">
     <h1>Tambah Penyewa</h1>
-    <form action="{{ route('host.store') }}" method="POST">
+    <form action="{{ route('host.store', $asset)}}" method="POST">
         @csrf
         {{-- <div class="form-group">
             <label for="asset_id">Select Asset:</label>
