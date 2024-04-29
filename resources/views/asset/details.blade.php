@@ -127,7 +127,7 @@
                 <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
               </div>
             @endif
-
+            <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">Back</a>
           </div>
         </div>
       </div>
