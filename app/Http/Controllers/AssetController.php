@@ -6,6 +6,9 @@ use App\Models\Asset;
 use App\Models\Host;
 use App\Models\AssetPhoto;
 use App\Models\AssetOwnershipHistory;
+
+use App\Exports\AssetsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -120,4 +123,14 @@ class AssetController extends Controller
     {
         $hosts = Host::all();
         return view('asset.edited', compact('asset', 'hosts'));
-    }}
+    }
+
+    public function earning(){
+        $assets = Asset::all();
+        return view('asset.earning', compact('assets'));
+    }
+
+    public function export(){
+        return Excel::download(new AssetsExport, 'assets.xlsx');
+    }
+}

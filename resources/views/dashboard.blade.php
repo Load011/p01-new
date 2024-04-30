@@ -42,7 +42,7 @@
           <div class="card-header">
             <h2 class="float-left">Pendapatan per Asset</h2>
             <div class="float-right">
-              <button class="btn btn-primary">Detail Pendapatan</button>
+              <a href="{{ route('asset.earning') }}" class="btn btn-primary">Pendapatan Aset</a>
             </div>
           </div>
           <div class="card-body">
@@ -73,13 +73,13 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
+              <table class="table" id="asset-table">
                 <thead class="thead-fixed">
                   <tr>
                     <th>Nama Aset</th>
                     <th>Jenis Aset</th>
                     <th>Alamat</th>
-                    <th>Details</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -103,9 +103,8 @@
   </div>
 </section>
 
-<script>
-  //Graph
 
+<script>
   $(function () {
   'use strict'
 

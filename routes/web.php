@@ -20,6 +20,8 @@ Route::delete('/hosts/{host}', [HostController::class, 'destroy'])->name('host.d
 //routes aset
 Route::get('/assets', [AssetController::class, 'index'])->name('asset.index');
 Route::get('/assets/create', [AssetController::class, 'create'])->name('asset.create');
+Route::get('/assets/earning', [AssetController::class,'earning'])->name('asset.earning');
+Route::get('/assets/export', [AssetController::class, 'export'])->name('asset.export');
 Route::post('/assets', [AssetController::class, 'store'])->name('asset.store');
 Route::get('/assets/{asset}', [AssetController::class, 'show'])->name('asset.show');
 Route::get('/assets/{asset}/edit', [AssetController::class, 'edit'])->name('asset.edit');

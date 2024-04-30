@@ -11,7 +11,9 @@
       <div class="card-body border">
         <div class="col-mt-12">
           <div class="row">
+
             <!-- Foto -->
+            <!-- Foto Besar -->
             <div class="col-md-4">
               <div class="row">
                 <div class="col-md-12">
@@ -22,18 +24,20 @@
                   @endif
                 </div>
               </div>
-              <div class="row thumbnails">
+              <!-- Foto Kecil -->
+              <div class="row thumbnail">
                 @forelse($asset->photos as $key => $photo)
                 <div class="col-md-3 grid-item">
                   <img src="{{ asset('foto_aset/' . $photo->photo_path) }}" alt="Asset Photo" class="img-fluid thumbnail" data-key="{{ $key }}" onclick="changeMainPhoto(this)">
                 </div>
                 @empty
-                 @endforelse
+                @endforelse
               </div>
             </div>
+
+            <!-- Bagian Detail -->
             <div class="col-md-8">
               <table class="table border">
-                <!--- Bagian Utama --->
                 <tr>
                   <th>Nama Aset</th>
                   <td>{{ $asset->nama_aset }}</td>
@@ -62,9 +66,11 @@
             </div>
           </div>
         </div>
+
+        <!-- Bagian Penghuni Sekarang -->
         <div class="col-mt-12">
           <div class="col-mt-4">
-            <h3>Penghuni Saat ini</h3>
+            <h3>Penghuni Sekarang</h3>
           </div>
           <table class="table border">
             <thead>
@@ -85,10 +91,12 @@
             </tbody>
           </table>
         </div>
+
+        <!-- Bagian Penghuni Sebelumnya -->
         <div class="col-mt-12">
           <div class="mt-4">
             @if ($asset->previousOwners->count())
-            <h3>Penghuni Aset Sebelumnya</h3>
+            <h3>Penghuni Sebelumnya</h3>
             <div class="scrollable-box">
               <table class="table border">
                 <thead class="sticky-header">
@@ -104,30 +112,30 @@
                     <th>Status Pembayaran</th>
                   </tr>
                 </thead>
-                  <tbody>
-                    @foreach ($asset->previousOwners as $previousOwner)
-                    <tr>
-                      <td>{{ $previousOwner->nama_penyewa }}</td>
-                      <td>{{ $previousOwner->no_ktp }}</td>
-                      <td>{{ $previousOwner->no_tlp }}</td>
-                      <td>{{ $previousOwner->upah_jasa }}</td>
-                      <td>{{ $previousOwner->harga_sewa }}</td>
-                      <td>{{ $previousOwner->bank_pembayaran }}</td>
-                      <td>{{ $previousOwner->jumlah_pembayaran }}</td>
-                      <td>{{ $previousOwner->upah_jasa + $previousOwner->harga_sewa }}</td>
-                      <td>{{ $previousOwner->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
+                <tbody>
+                  @foreach ($asset->previousOwners as $previousOwner)
+                  <tr>
+                    <td>{{ $previousOwner->nama_penyewa }}</td>
+                    <td>{{ $previousOwner->no_ktp }}</td>
+                    <td>{{ $previousOwner->no_tlp }}</td>
+                    <td>{{ $previousOwner->upah_jasa }}</td>
+                    <td>{{ $previousOwner->harga_sewa }}</td>
+                    <td>{{ $previousOwner->bank_pembayaran }}</td>
+                    <td>{{ $previousOwner->jumlah_pembayaran }}</td>
+                    <td>{{ $previousOwner->upah_jasa + $previousOwner->harga_sewa }}</td>
+                    <td>{{ $previousOwner->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
             @endif
-            @if (!$asset->tuanRumah)
+            {{-- @if (!$asset->tuanRumah)
               <div class="mt-4">
                 <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
               </div>
-            @endif
-            <a href="{{ route('dashboard') }}" class="btn btn-primary mt-4">Back</a>
+            @endif --}}
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4">Back</a>
           </div>
         </div>
       </div>
@@ -135,7 +143,18 @@
   </div>
 </section>
 
-@endsection
+<script>
+  function changeMainPhoto(clickedPhoto) {
+    const selectedIndex = clickedPhoto.dataset.key;
+    const mainPhoto = document.getElementById('mainPhoto');
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+  
+    mainPhoto.src = clickedPhoto.src;
+    thumbnails.forEach(thumbnail => thumbnail.classList.remove('selected'));
+  
+    clickedPhoto.classList.add('selected');
+  }
+</script>
 
 <style>
   .scrollable-box {
@@ -156,27 +175,5 @@
     height: 200px;
     object-fit: cover;
   }
-    .thumbnail {
-    width: 100px;
-    height: auto;
-    object-fit: cover;
-  }
 </style>
-
-<script>
-  function changeMainPhoto(clickedPhoto) {
-    // Get the clicked photo's data-key attribute (index)
-    const selectedIndex = clickedPhoto.dataset.key;
-  
-    // Get references to the main photo and all thumbnails
-    const mainPhoto = document.getElementById('mainPhoto');
-    const thumbnails = document.querySelectorAll('.thumbnails img');
-  
-    // Update the main photo source and remove the "selected" class from all thumbnails
-    mainPhoto.src = clickedPhoto.src;
-    thumbnails.forEach(thumbnail => thumbnail.classList.remove('selected'));
-  
-    // Add the "selected" class to the clicked thumbnail
-    clickedPhoto.classList.add('selected');
-  }
-  </script>
+@endsection

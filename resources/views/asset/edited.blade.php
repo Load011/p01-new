@@ -23,17 +23,25 @@
                               <div class="col-md-4">
                                 <div class="row">
                                   <div class="col-md-12">
-                                    <img src="{{ asset('foto_aset/' . $asset->photos->first()->photo_path) }}" alt="Asset Photo" class="img-fluid main-photo" id="mainPhoto">
+                                    @if ($asset->photos->isNotEmpty())
+                                      <img src="{{ asset('foto_aset/' . $asset->photos->first()->photo_path) }}" alt="Asset Photo" class="img-fluid main-photo" id="mainPhoto">
+                                    @else
+                                      <span>No photos available</span>
+                                    @endif
                                   </div>
                                 </div>
-                                <div class="row thumbnails">
-                                  @foreach($asset->photos as $key => $photo)
-                                    <div class="col-md-3 grid-item">
-                                      <img src="{{ asset('foto_aset/' . $photo->photo_path) }}" alt="Asset Photo" class="img-fluid thumbnail" data-key="{{ $key }}" onclick="changeMainPhoto(this)">
-                                    </div>
-                                  @endforeach
+                                <!-- Foto Kecil -->
+                                <div class="row thumbnail">
+                                  @forelse($asset->photos as $key => $photo)
+                                  <div class="col-md-3 grid-item">
+                                    <img src="{{ asset('foto_aset/' . $photo->photo_path) }}" alt="Asset Photo" class="img-fluid thumbnail" data-key="{{ $key }}" onclick="changeMainPhoto(this)">
+                                  </div>
+                                  @empty
+                                  @endforelse
                                 </div>
                               </div>
+
+                              
                                 <div class="col-md-8">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h2>Asset Details</h2>
@@ -89,6 +97,11 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            @if (!$asset->tuanRumah)
+                              <div class="mt-4">
+                                <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
+                              </div>
+                            @endif
                             {{-- <button class="btn btn-secondary mt-2" id="edit-tenant-btn">Edit Tenant Info</button> --}}
                             @if($asset->host_id)
                                 <form action="{{ route('host.edit', $asset->tuanRumah->id) }}" method="GET">

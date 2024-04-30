@@ -8,12 +8,12 @@
               <p>Dashboard</p>
             </a>
           </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="{{ route('host.index') }}" class="nav-link @if(request()->routeIs('host.index')) active @endif">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Tuan Rumah</p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="{{ route('asset.index') }}" class="nav-link @if(request()->routeIs('asset.index')) active @endif">
                 <i class="nav-icon fas fa-box"></i>
