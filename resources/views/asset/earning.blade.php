@@ -32,7 +32,8 @@
             @endforeach
           </tbody>
         </table>
-      </div>
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-4">Back</a>
+      </div>    
     </div>
   </div>
 </section>

@@ -8,6 +8,7 @@ use App\Models\AssetPhoto;
 use App\Models\AssetOwnershipHistory;
 
 use App\Exports\AssetsExport;
+use App\Exports\DetailsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -132,5 +133,9 @@ class AssetController extends Controller
 
     public function export(){
         return Excel::download(new AssetsExport, 'assets.xlsx');
+    }
+
+    public function exportDetails(Asset $asset){
+        return Excel::download(new DetailsExport($asset),'details.xlsx');
     }
 }

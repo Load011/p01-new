@@ -130,6 +130,9 @@
               </table>
             </div>
             @endif
+            <div class="mb-3">
+              <a href="{{ route('asset.exportDetails', $asset->id) }}" class="btn btn-success">Export to Excel</a>
+            </div>
             {{-- @if (!$asset->tuanRumah)
               <div class="mt-4">
                 <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>
