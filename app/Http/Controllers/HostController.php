@@ -30,19 +30,28 @@ class HostController extends Controller
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
             'harga_sewa' => 'required',
-            'bank_pembayaran' => 'required',
-            'jumlah_pembayaran' => 'required',
-            'saldo_piutang' => 'required',
-            'status_pengontrak' => 'required',
-            'status_aktif' => 'required',
-
+            'pendapatan_sewa'=> 'nullable',
+            'tgl_tunai'=> 'nullable',
+            'jumlah_tunai'=>'nullable',
+            'tgl_mandiri'=> 'nullable',
+            'jumlah_mandiri'=> 'nullable',
+            'tgl_bca_leo'=> '',
+            'jumlah_bca_leo'=> '',
+            'tgl_bca_sgls'  => '',
+            'jumlah_bca_sgls'=> '',
+            'total' => '',
+            'saldo_piutang' => 'nullable',
+            'status_pengontrak' => '',
+            'keterangan'=> '',
+            'bulan'=> '',
+            'aktif'=> '',
         ]);
         $host = Host::create($validatedData);
         $assets = Asset::where('id', $asset)->first();
         $assets->host_id = $host->id;
         $assets->save();
 
-        return redirect()->route('asset.details', $assets->id)
+        return redirect()->route('asset.details')
                          ->with('success', 'Host created successfully.');
     }
 
@@ -61,11 +70,21 @@ class HostController extends Controller
             'tgl_akhir' => 'required',
             'upah_jasa' => 'required',
             'harga_sewa' => 'required',
-            'bank_pembayaran' => 'required',
-            'jumlah_pembayaran' => 'required',
-            'saldo_piutang' => 'required',
-            'status_pengontrak' => 'required',
-            'status_aktif' => 'required',
+            'pendapatan_sewa'=> 'nullable',
+            'tgl_tunai'=> 'nullable',
+            'jumlah_tunai'=>'nullable',
+            'tgl_mandiri'=> 'nullable',
+            'jumlah_mandiri'=> 'nullable',
+            'tgl_bca_leo'=> '',
+            'jumlah_bca_leo'=> '',
+            'tgl_bca_sgls'  => '',
+            'jumlah_bca_sgls'=> '',
+            'total' => '',
+            'saldo_piutang' => 'nullable',
+            'status_pengontrak' => '',
+            'keterangan'=> '',
+            'bulan'=> '',
+            'aktif'=> '',
         ]);
 
         $host->update($validatedData);

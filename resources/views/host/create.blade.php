@@ -5,15 +5,6 @@
     <h1>Tambah Penyewa</h1>
     <form action="{{ route('host.store', $asset)}}" method="POST">
         @csrf
-        {{-- <div class="form-group">
-            <label for="asset_id">Select Asset:</label>
-            <select class="form-control" id="asset_id" name="asset_id">
-                <option value="">Select Asset</option>
-                @foreach ($assets as $asset)
-                    <option value="{{ $asset->id }}">{{ $asset->nama_aset }}</option>
-                @endforeach
-            </select>
-        </div> --}}
         <div class="form-group">
             <label for="nama_penyewa">Nama Penyewa:</label>
             <input type="text" class="form-control" id="nama_penyewa" name="nama_penyewa" value="{{ old('nama_penyewa') }}">
@@ -36,19 +27,11 @@
         </div>
         <div class="form-group">
             <label for="upah_jasa">Upah Jasa:</label>
-            <input type="number" class="form-control" id="upah_jasa" name="upah_jasa" value="{{ old('upah_jasa') }}">
+            <input type="text" class="form-control" id="upah_jasa" name="upah_jasa" value="{{ old('upah_jasa') }}" onkeyup="formatInput(this)">
         </div>
         <div class="form-group">
             <label for="harga_sewa">Harga Sewa:</label>
-            <input type="number" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ old('harga_sewa') }}">
-        </div>
-        <div class="form-group">
-            <label for="bank_pembayaran">Nama Bank Pembayaran:</label>
-            <input type="text" class="form-control" id="bank_pembayaran" name="bank_pembayaran" value="{{ old('bank_pembayaran') }}">
-        </div>
-        <div class="form-group">
-            <label for="jumlah_pembayaran">Jumlah Pembayaran:</label>
-            <input type="number" class="form-control" id="jumlah_pembayaran" name="jumlah_pembayaran" value="{{ old('jumlah_pembayaran') }}">
+            <input type="text" class="form-control" id="harga_sewa" name="harga_sewa" value="{{ old('harga_sewa') }}" onkeyup="formatInput(this)">
         </div>
         <div class="form-group">
             <label for="saldo_piutang">Status Saldo Piutang:</label>
@@ -78,4 +61,16 @@
         </div>
     </form>
 </div>
+
+<script>
+    function formatInput(input) {
+        let value = input.value.replace(/\D/g, '');
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        input.value = value;
+    }
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        document.getElementById('upah_jasa').value = document.getElementById('upah_jasa').getAttribute('data-value');
+        document.getElementById('harga_sewa').value = document.getElementById('harga_sewa').getAttribute('data-value');
+    });
+</script>
 @endsection

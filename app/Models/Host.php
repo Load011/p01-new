@@ -11,8 +11,6 @@ class Host extends Model
 
     protected $table = "tuan_rumah";
 
-    public $timestamps = false;
-
     protected $fillable = [
         'nama_penyewa',
         'no_ktp',
@@ -21,11 +19,21 @@ class Host extends Model
         'tgl_akhir',
         'upah_jasa',
         'harga_sewa',
-        'bank_pembayaran',
-        'jumlah_pembayaran',
+        'pendapatan_sewa',
+        'tgl_tunai',
+        'jumlah_tunai',
+        'tgl_mandiri',
+        'jumlah_mandiri',
+        'tgl_bca_leo',
+        'jumlah_bca_leo',
+        'tgl_bca_sgls',
+        'jumlah_bca_sgls',
+        'total',
         'saldo_piutang',
         'status_pengontrak',
-        'status_aktif',
+        'keterangan',
+        'bulan',
+        'aktif',
     ];
 
     public function rekapAsets()

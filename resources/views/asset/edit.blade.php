@@ -58,11 +58,6 @@
             <label for="kode_aset">Kode Aset:</label>
             <input type="text" class="form-control" id="kode_aset" name="kode_aset" value="{{ $asset->kode_aset }}" required>
         </div>
-
-        <div class="form-group">
-            <label for="deskripsi_aset"> Deskripsi Aset</label>
-            <input type="text" class="form-control" id="deskripsi_aset" name="deskripsi_aset" value="{{ $asset->deskripsi_aset}}">
-        </div>
         
         <div class="form-group">
             <label for="pengeluaran">Pengeluaran:</label>

@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('jenis_aset');
             $table->string('kode_aset');
             $table->string('alamat');
+            $table->integer('lantai')->nullable();
+            $table->integer('no_rumah')->nullable();
+            $table->string('fasilitas')->nullable();
+            $table->string('status')->nullable();
             $table->decimal('pengeluaran',10,0)->nullable();
             $table->unsignedBigInteger('id_transaksi')->nullable();
             $table->timestamps();

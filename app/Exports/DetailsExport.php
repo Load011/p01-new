@@ -9,38 +9,39 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class DetailsExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
-    protected $asset;
-
-    public function __construct(Asset $asset)
-    {
-        $this->asset = $asset;
-    }
-
     public function collection()
     {
-        return collect([
-            [
-                'Nama Aset' => $this->asset->nama_aset,
-                'Alamat Aset' => $this->asset->alamat,
-                'Pendapatan' => 'Rp ' . number_format($this->asset->tuanRumah ? $this->asset->tuanRumah->harga_sewa : 0, 2),
-                'Pengeluaran' => 'Rp ' . number_format($this->asset->pengeluaran, 2),
-                'Penghuni Sekarang' => $this->asset->tuanRumah ? $this->asset->tuanRumah->nama_penyewa : '-',
-                'No.KTP' => $this->asset->tuanRumah ? $this->asset->tuanRumah->no_ktp : '-',
-                'No.Hp' => $this->asset->tuanRumah ? $this->asset->tuanRumah->no_tlp : '-',
-            ]
-        ]);
+        $assets = Asset::all();
+
+        return $assets->map(function ($asset) {
+            return [
+                'Kode Aset' => $asset->kode_aset,
+                'Nama Aset' => $asset->nama_aset,
+                'Alamat Aset' => $asset->alamat,
+                'Jenis Aset' => $asset->jenis_aset,
+                'Wilayah' => $asset->wilayah,
+                'Penghuni Sekarang' => $asset->tuanRumah ? $asset->tuanRumah->nama_penyewa : '-',
+                'No.KTP' => $asset->tuanRumah ? $asset->tuanRumah->no_ktp: '-',
+                'No.Hp' => $asset->tuanRumah ? $asset->tuanRumah->no_tlp : '-',
+                // 'Bank Pembayaran' => $asset->tuanRumah ? $asset->tuanRumah->bank_pembayaran :'-',
+                'Status Aktif' => $asset->tuanRumah ? ($asset->tuanRumah->aktif ? 'Aktif' : 'Tidak Aktif') : '-',
+            ];
+        });
     }
 
     public function headings(): array
     {
         return [
+            'Kode Aset',
             'Nama Aset',
             'Alamat Aset',
-            'Pendapatan',
-            'Pengeluaran',
+            'Jenis Aset',
+            'Wilayah',
             'Penghuni Sekarang',
             'No.KTP',
             'No.Hp',
+            // 'Bank Pembayaran',
+            'Status Aktif'
         ];
     }
 }

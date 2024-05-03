@@ -22,10 +22,13 @@ class Asset extends Model
         'nama_aset',
         'jenis_aset',
         'kode_aset',
-        'deskripsi_aset',
-        'pengeluaran',
         'alamat',
-
+        'lantai',
+        'no_rumah',
+        'fasilitas',
+        'status',
+        'created_at',
+        'updated_at'
     ] ;
 
     public function tuanRumah(){

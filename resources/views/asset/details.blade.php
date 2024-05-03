@@ -47,6 +47,10 @@
                   <td>{{ $asset->alamat }}</td>
                 </tr>
                 <tr>
+                  <th>No. Rumah</th>
+                  <td>{{ $asset->no_rumah }}</td>
+                </tr>
+                <tr>
                   <th>Jenis Aset</th>
                   <td>{{ $asset->jenis_aset }}</td>
                 </tr>
@@ -55,12 +59,12 @@
                   <td>{{ $asset->wilayah }}</td>
                 </tr>
                 <tr>
-                  <th>Deskripsi</th>
-                  <td>{{ $asset->deskripsi_aset}}</td>
+                  <th>Status</th>
+                  <td>{{ $asset->status == 0 ? 'Tidak Aktif' : 'Aktif'}}</td>
                 </tr>
                 <tr>
                   <th>Pengeluaran</th>
-                  <td>{{ $asset->pengeluaran}}</td>
+                  <td>{{ $asset->pengeluaran ? $asset->pengeluaran : '0'}}</td>
                 </tr>
               </table>
             </div>
@@ -78,7 +82,7 @@
                 <th>Nama Penyewa</th>
                 <th>No. KTP</th>
                 <th>No. Telepon</th>
-                <th>Bank Pembayaran</th>
+                <th>Harga Sewa</th>
               </tr>
             </thead>
             <tbody>
@@ -86,7 +90,7 @@
                 <td>{{ $asset->tuanRumah ? $asset->tuanRumah->nama_penyewa : '-' }}</td>
                 <td>{{ $asset->tuanRumah ? $asset->tuanRumah->no_ktp : '-' }}</td>
                 <td>{{ $asset->tuanRumah ? $asset->tuanRumah->no_tlp : '-' }}</td>
-                <td>{{ $asset->tuanRumah ? $asset->tuanRumah->bank_pembayaran : '-' }}</td>
+                <td>{{ $asset->tuanRumah ? 'Rp. ' . number_format($asset->tuanRumah->harga_sewa, 2, '.', ',') : '-' }}</td>
               </tr>
             </tbody>
           </table>
@@ -130,9 +134,6 @@
               </table>
             </div>
             @endif
-            <div class="mb-3">
-              <a href="{{ route('asset.exportDetails', $asset->id) }}" class="btn btn-success">Export to Excel</a>
-            </div>
             {{-- @if (!$asset->tuanRumah)
               <div class="mt-4">
                 <a href="{{ route('host.create', $asset->id) }}" class="btn btn-primary">Tambah Penyewa</a>

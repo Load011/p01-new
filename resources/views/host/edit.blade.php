@@ -28,20 +28,24 @@
         </div>
         <div class="form-group">
             <label for="upah_jasa">Upah Jasa:</label>
-            <input type="number" class="form-control" id="upah_jasa" name="upah_jasa" value="{{$host->upah_jasa}}">
-        </div>
-        <div class="form-group">
+            <input type="text" class="form-control" id="upah_jasa_display" name="upah_jasa_display" value="{{$host->upah_jasa}}">
+            <input type="hidden" id="upah_jasa" name="upah_jasa" value="{{$host->upah_jasa}}">
+          </div>
+          
+          <div class="form-group">
             <label for="harga_sewa">Harga Sewa:</label>
-            <input type="number" class="form-control" id="harga_sewa" name="harga_sewa" value="{{$host->harga_sewa}}">
-        </div>
-        <div class="form-group">
+            <input type="text" class="form-control" id="harga_sewa_display" name="harga_sewa_display" value="{{$host->harga_sewa}}">
+            <input type="hidden" id="harga_sewa" name="harga_sewa" value="{{$host->harga_sewa}}">
+          </div>
+          
+        {{-- <div class="form-group">
             <label for="bank_pembayaran">Nama Bank Pembayaran:</label>
             <input type="text" class="form-control" id="bank_pembayaran" name="bank_pembayaran" value="{{$host->bank_pembayaran}}">
         </div>
         <div class="form-group">
             <label for="jumlah_pembayaran">Jumlah Pembayaran:</label>
             <input type="number" class="form-control" id="jumlah_pembayaran" name="jumlah_pembayaran" value="{{$host->jumlah_pembayaran}}">
-        </div>
+        </div> --}}
         <div class="form-group">
             <label for="saldo_piutang">Status Saldo Piutang:</label>
             <select class="form-control" id="saldo_piutang" name="saldo_piutang">
@@ -57,8 +61,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="status_aktif">Status Hadir:</label>
-            <select class="form-control" id="status_aktif" name="status_aktif">
+            <label for="aktif">Status:</label>
+            <select class="form-control" id="aktif" name="aktif">
                 <option value="0">Tidak Aktif</option>
                 <option value="1">Aktif</option>
             </select>
@@ -68,4 +72,16 @@
     </form>
 </div>
 
+<script>
+    $(document).ready(function() {
+    $('.form-group input[type="text"]').on('input', function() {
+      const value = $(this).val().replace(/\D/g, '');
+      const formattedValue = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      $(this).val(formattedValue);
+  
+      const hiddenInputId = $(this).attr('id').replace('_display', '');
+      $('#' + hiddenInputId).val(value);
+    });
+  });
+</script> 
 @endsection

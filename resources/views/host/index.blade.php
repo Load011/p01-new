@@ -22,11 +22,8 @@
                                 <th>Tanggal Berakhir</th>
                                 <th>Upah Jasa</th>
                                 <th>Harga Sewa</th>
-                                <th>Bank Pembayaran</th>
-                                <th>Jumlah Pembayaran</th>
                                 <th>Status Saldo</th>
                                 <th>Status Pengontrak</th>
-                                <th>Status Aktif</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -40,14 +37,8 @@
                                 <td>{{ $host->tgl_akhir }}</td>
                                 <td>{{ $host->upah_jasa }}</td>
                                 <td>{{ $host->harga_sewa }}</td>
-                                <td>{{ $host->bank_pembayaran }}</td>
-                                <td>{{ $host->jumlah_pembayaran }}</td>
                                 <td>{{ $host->saldo_piutang == 0 ? 'Tidak Lunas' : 'Lunas' }}</td>
-                                <td>{{ $host->status_pengontrak == 0 ? 'Perorangan' : 'Complimet' }}</td>
-                                <td>{{ $host->status_aktif == 0 ? 'Tidak Aktif' : 'Aktif' }}</td>
-                
-                
-                
+                                <td>{{ $host->status_pengontrak == 0 ? 'Perorangan' : 'Complimet' }}</td>                
                                 <td>
                                     <a href="{{ route('host.edit', $host->id) }}" class="btn btn-secondary btn-sm">Edit</a>
                                     <form action="{{ route('host.destroy', $host->id) }}" method="POST" style="display: inline-block;">

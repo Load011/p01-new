@@ -37,6 +37,10 @@ class AssetController extends Controller
             'jenis_aset' => 'required',
             'kode_aset' => 'required',
             'alamat' => 'required',
+            'lantai'=> 'nullable',
+            'no_rumah' => 'nullable',
+            'fasilitas'=> 'nullable',
+            'status'=> 'nullable',
             'id_transaksi' => 'exists:tuan_rumah,id',
             'deskripsi_aset' => 'nullable|string',
             'pengeluaran' => 'nullable',
@@ -78,6 +82,10 @@ class AssetController extends Controller
             'jenis_aset' => 'required',
             'kode_aset' => 'required',
             'alamat' => 'required',
+            'lantai'=> 'nullable',
+            'no_rumah' => 'nullable',
+            'fasilitas'=> 'nullable',
+            'status'=> 'nullable',
             'id_transaksi' => 'exists:tuan_rumah,id',
             'deskripsi_aset' => 'nullable|string',
             'pengeluaran' => 'nullable',
@@ -135,7 +143,7 @@ class AssetController extends Controller
         return Excel::download(new AssetsExport, 'assets.xlsx');
     }
 
-    public function exportDetails(Asset $asset){
-        return Excel::download(new DetailsExport($asset),'details.xlsx');
+    public function exportDetails(){
+        return Excel::download(new DetailsExport,'details.xlsx');
     }
 }
