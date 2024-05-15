@@ -42,7 +42,22 @@ return [
             'url' => env('APP_URL').'/foto_aset', // Update the URL to match the new path
             'visibility' => 'public',
             'throw' => false,
-        ],        
+        ], 
+        
+        'before_photo' => [
+            'driver' => 'local',
+            'root' => public_path('before_photos'),
+            'url' => env('APP_URL').'/before_photos',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+        'after_photo' => [
+            'driver' => 'local',
+            'root' => public_path('after_photos'),
+            'url' => env('APP_URL').'/after_photos',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

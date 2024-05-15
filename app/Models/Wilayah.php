@@ -16,7 +16,11 @@ class Wilayah extends Model
         'kode_pos'
     ];
 
-    public function wilayah_penapj(){
-        return $this->belongsTo(Asset::class);
+    public function wilayahAsset(){
+        return $this->hasMany(Asset::class, 'wilayah_id');
+    }
+
+    public function wilayahPJ(){
+        return $this->hasMany(Overseer::class, 'id_wilayah');
     }
 }

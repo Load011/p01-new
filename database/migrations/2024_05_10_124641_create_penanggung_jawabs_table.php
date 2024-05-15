@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('penanggung_jawab', function (Blueprint $table) {
             $table->id();
             $table->string('nama_pj');
+            $table->integer('wilayah_id');
             $table->string('no_ktp');
             $table->string('no_telepon');
             $table->timestamps();
